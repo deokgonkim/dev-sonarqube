@@ -1,0 +1,7 @@
+aws/cloudformation/vpc-dgkim
+aws/cloudformation/test/.env
+.env.local
+
+# local docker-compose repository
+psql
+data

@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  webservice:
+    image: dev/sonarqube
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - .env.local
+    ports:
+      - 9000:9000
+      - 80:80
+    volumes:
+      # - ./opt/sonarqube/data:/opt/sonarqube/data
+      # - ./opt/sonarqube/logs:/opt/sonarqube/logs
+      # - ./opt/sonarqube/extensions:/opt/sonarqube/extensions
+      - ./data:/data
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=sonarqube
+      - POSTGRES_PASSWORD=sonarqube
+      - POSTGRES_DB=sonarqube
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      - ./psql:/var/lib/postgresql/data
